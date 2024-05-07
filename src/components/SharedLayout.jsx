@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 import { Outlet } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { fetchPopularMovies } from './api';
 
 const StyledLink = styled(NavLink)`
   color: black;
@@ -12,25 +10,6 @@ const StyledLink = styled(NavLink)`
   }
 `;
 export const SharedLayout = () => {
-  const [moviesTitle, setMoviesTitle] = useState([]);
-
-  useEffect(() => {
-    const moviesTitleArr = [];
-    if (moviesTitleArr.length === 0) {
-      const getPopularMovies = async () => {
-        const popularMovies = await fetchPopularMovies();
-        popularMovies.results.map(item => {
-          moviesTitleArr.push({
-            id: item.id,
-            title: item.original_title,
-          });
-          setMoviesTitle([...moviesTitleArr]);
-        });
-      };
-      getPopularMovies();
-    }
-  }, []);
-
   return (
     <div>
       <header>
@@ -40,9 +19,7 @@ export const SharedLayout = () => {
           <StyledLink to="/movies/:movieId">MovieDetails</StyledLink>
         </nav>
       </header>
-      <ul>
-        <li></li>
-      </ul>
+
       <Outlet />
     </div>
   );
