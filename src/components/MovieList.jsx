@@ -21,30 +21,12 @@ export const MovieList = () => {
   }, []);
 
   return (
-    // <div>
-    //   <ul>
-    //     {movies.map(movie => (
-    //       <li key={movie.id}>{movie.title}</li>
-    //     ))}
-    //   </ul>
-    // </div>
     <div>
       {movies.map(movie => (
         <div key={movie.id}>
-          <Link to={`${movie.id}`}>{movie.title}</Link>
+          <Link to={`/movie/${movie.id}`}>{movie.title}</Link>
         </div>
       ))}
     </div>
   );
 };
-
-// <Container>
-//   {products.map(product => (
-//     <CardWrapper key={product.id}>
-//       <Link to={`${product.id}`}>
-//         <img src="https://via.placeholder.com/200x100" alt="" />
-//         <ProductName>{product.name}</ProductName>
-//       </Link>
-//     </CardWrapper>
-//   ))}
-// </Container>;
