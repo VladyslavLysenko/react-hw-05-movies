@@ -14,9 +14,14 @@ export const SharedLayout = () => {
     <div>
       <header>
         <nav>
-          <StyledLink to="/">Home</StyledLink>
-          <StyledLink to="/movies">Movies</StyledLink>
-          <StyledLink to="/movies/:movieId">MovieDetails</StyledLink>
+          <ul>
+            <li>
+              <StyledLink to="/">Home</StyledLink>
+            </li>
+            <li>
+              <StyledLink to="/movies">Movies</StyledLink>
+            </li>
+          </ul>
         </nav>
       </header>
 

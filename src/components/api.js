@@ -2,10 +2,10 @@ import axios from 'axios';
 // https://api.themoviedb.org/3/search/movie?query=Jack+Reacher&api_key=bc8e4f8ef35238fae81789cd185c5d63
 // https://api.themoviedb.org/3/movie/popular
 
-axios.defaults.baseURL = `https://api.themoviedb.org/3/movie/popular`;
-
+axios.defaults.baseURL = `https://api.themoviedb.org/`;
+//api.themoviedb.org
 export const fetchPopularMovies = async () => {
-  const response = await axios.get('', {
+  const response = await axios.get('3/movie/popular', {
     params: {
       api_key: 'bc8e4f8ef35238fae81789cd185c5d63',
       page: 1,
@@ -14,20 +14,39 @@ export const fetchPopularMovies = async () => {
 
   return response.data;
 };
+// /movies/get-movie-details
+//api.themoviedb.org/3/movie/843527?api_key=bc8e4f8ef35238fae81789cd185c5d63
 
-// const options = {
-//   method: 'GET',
-//   headers: {
-//     accept: 'application/json',
-//     Authorization:
-//       'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiYzhlNGY4ZWYzNTIzOGZhZTgxNzg5Y2QxODVjNWQ2MyIsInN1YiI6IjYzYjU5ZTgzMWQxYmY0MDA3ZGJlNmY2MiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.BsoVCmt8VFL4zuujWHZOeT98RgVtMjvuEmlNKHRXVl4',
-//   },
-// };
+export const FetchMovieDetails = async movieId => {
+  const response = await axios.get(`3/movie/${movieId}`,
+    {
+      params: {
+        api_key: 'bc8e4f8ef35238fae81789cd185c5d63',
+        language: 'en-US',
+      },
+    }
+  );
 
-// fetch(
-//   'https://api.themoviedb.org/3/movie/popular?language=en-US&page=1',
-//   options
-// )
-//   .then(response => response.json())
-//   .then(response => console.log(response))
-//   .catch(err => console.error(err));
+  return response.data;
+};
+
+// export const baseUrl = 'https://api.themoviedb.org';
+// export const key = 'bc8e4f8ef35238fae81789cd185c5d63';
+// export const type = 'week';
+// export async function FetchTrending(baseUrl, key, type) {
+//   const response = await fetch(
+//     `${baseUrl}/3/trending/movie/${type}?api_key=${key}`
+//   );
+//   if (response.ok) {
+//     return response.json();
+//   }
+// }
+
+// async function FetchMovieDetails(baseUrl, id, key) {
+//   const response = await fetch(
+//     `${baseUrl}/3/movie/${id}?api_key=${key}&language=en-US`
+//   );
+//   if (response.ok) {
+//     return response.json();
+//   }
+// }

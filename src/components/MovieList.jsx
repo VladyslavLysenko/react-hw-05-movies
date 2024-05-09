@@ -1,30 +1,16 @@
-import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { fetchPopularMovies } from './api';
+import { Link, useLocation } from 'react-router-dom';
 
-export const MovieList = () => {
-  const [movies, setMovies] = useState([]);
-
-  useEffect(() => {
-    const moviesArr = [];
-    const getPopularMovies = async () => {
-      const popularMovies = await fetchPopularMovies();
-      popularMovies.results.map(item => {
-        moviesArr.push({
-          id: item.id,
-          title: item.original_title,
-        });
-        return setMovies([...moviesArr]);
-      });
-    };
-    getPopularMovies();
-  }, []);
+export const MovieList = ({ movies }) => {
+  const location = useLocation();
+  console.log(location);
 
   return (
     <div>
       {movies.map(movie => (
         <div key={movie.id}>
-          <Link to={`/movie/${movie.id}`}>{movie.title}</Link>
+          <Link to={`/movies/${movie.id}`} state={{ from: location }}>
+            <div>{movie.title}</div>
+          </Link>
         </div>
       ))}
     </div>
