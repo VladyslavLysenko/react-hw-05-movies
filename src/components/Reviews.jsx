@@ -2,10 +2,14 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { FetchMovieRewievs } from './api';
 export const Reviews = () => {
-  const [rewievs, setRewievs] = useState([]);
+  const [rewiews, setRewievs] = useState([]);
+  const [loading, setLoading] = useState(false);
+
   const { movieId } = useParams();
   useEffect(() => {
     const getRewievs = async () => {
+      setLoading(true);
+
       try {
         const response = await FetchMovieRewievs(movieId);
         const reviewsArr = response.results.map(item => ({
@@ -16,27 +20,32 @@ export const Reviews = () => {
         setRewievs(reviewsArr);
       } catch {
         console.error();
+      } finally {
+        setLoading(false);
       }
     };
     getRewievs();
   }, [movieId]);
 
-  // console.log('rewievs', rewievs);
   return (
-    // const { id, author, content } = rewievs;
     <div>
       <h2>Reviews</h2>
-      {rewievs.length ? (
-        <ul>
-          {rewievs.map(review => (
-            <li key={rewievs.id}>
-              <h3>{review.author}:</h3>
-              <span>{review.content}</span>
-            </li>
-          ))}
-        </ul>
+
+      {loading ? (
+        <div>Loading...</div>
       ) : (
-        <div>Nothing...</div>
+        <ul>
+          {rewiews.length > 0 ? (
+            rewiews.map(review => (
+              <li key={review.id}>
+                <h3>{review.author}:</h3>
+                <span>{review.content}</span>
+              </li>
+            ))
+          ) : (
+            <div>Nothing...</div>
+          )}
+        </ul>
       )}
     </div>
   );

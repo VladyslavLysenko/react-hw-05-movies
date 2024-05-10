@@ -5,10 +5,14 @@ import err from '../img/err.jpg';
 
 export const Cast = () => {
   const [casts, setCasts] = useState([]);
+  const [loading, setLoading] = useState(false);
+
   const { movieId } = useParams();
 
   useEffect(() => {
     const getCasts = async () => {
+      setLoading(true);
+
       try {
         const response = await FetchMovieCasts(movieId);
         console.log(response.cast);
@@ -20,6 +24,8 @@ export const Cast = () => {
         setCasts(castsArr);
       } catch {
         console.error();
+      } finally {
+        setLoading(false);
       }
     };
     getCasts();
@@ -27,22 +33,28 @@ export const Cast = () => {
 
   console.log('casts', casts);
   return (
-    <ul>
-      {casts.length > 0 &&
-        casts.map(cast => (
-          <li key={cast.id}>
-            <img
-              src={
-                cast.photo
-                  ? `https://image.tmdb.org/t/p/w500${cast.photo}`
-                  : err
-              }
-              alt={cast.name}
-              width="150"
-            />
-            <h3>{cast.name}</h3>
-          </li>
-        ))}
-    </ul>
+    <div>
+      {loading ? (
+        <div>Loading...</div>
+      ) : (
+        <ul>
+          {casts.length > 0 &&
+            casts.map(cast => (
+              <li key={cast.id}>
+                <img
+                  src={
+                    cast.photo
+                      ? `https://image.tmdb.org/t/p/w500${cast.photo}`
+                      : err
+                  }
+                  alt={cast.name}
+                  width="150"
+                />
+                <h3>{cast.name}</h3>
+              </li>
+            ))}
+        </ul>
+      )}
+    </div>
   );
 };
