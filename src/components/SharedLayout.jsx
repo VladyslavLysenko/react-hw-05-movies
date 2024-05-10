@@ -24,8 +24,9 @@ export const SharedLayout = () => {
           </ul>
         </nav>
       </header>
-
-      <Outlet />
+      <main>
+        <Outlet />
+      </main>
     </div>
   );
 };
