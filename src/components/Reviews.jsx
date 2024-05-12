@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { FetchMovieRewievs } from './api';
-export const Reviews = () => {
+import { FetchMovieRewievs } from './Api';
+const Reviews = () => {
   const [rewiews, setRewievs] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -50,3 +50,5 @@ export const Reviews = () => {
     </div>
   );
 };
+
+export default Reviews;

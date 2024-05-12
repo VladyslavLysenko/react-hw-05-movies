@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { FetchMovieCasts } from './api';
+import { FetchMovieCasts } from './Api';
 import err from '../img/err.jpg';
 
-export const Cast = () => {
+const Cast = () => {
   const [casts, setCasts] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -15,7 +15,6 @@ export const Cast = () => {
 
       try {
         const response = await FetchMovieCasts(movieId);
-        console.log(response.cast);
         const castsArr = response.cast.map(item => ({
           id: item.id,
           photo: item.profile_path,
@@ -31,7 +30,6 @@ export const Cast = () => {
     getCasts();
   }, [movieId]);
 
-  console.log('casts', casts);
   return (
     <div>
       {loading ? (
@@ -58,3 +56,5 @@ export const Cast = () => {
     </div>
   );
 };
+
+export default Cast;

@@ -1,7 +1,13 @@
 import styled from 'styled-components';
-import { NavLink, Outlet, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { FetchMovieDetails } from 'components/api';
+import {
+  Link,
+  NavLink,
+  Outlet,
+  useLocation,
+  useParams,
+} from 'react-router-dom';
+import { Suspense, useEffect, useRef, useState } from 'react';
+import { FetchMovieDetails } from 'components/Api';
 
 const StyledLink = styled(NavLink)`
   color: black;
@@ -14,6 +20,10 @@ const StyledLink = styled(NavLink)`
 const MovieDetails = () => {
   const [film, setFilm] = useState({ genres: [] });
   const { movieId } = useParams();
+  const location = useLocation();
+  const backLinkLocationRef = useRef(location.state?.from ?? '/movies');
+  console.log(location);
+  console.log(backLinkLocationRef);
 
   useEffect(() => {
     const getMoviesById = async () => {
@@ -43,13 +53,14 @@ const MovieDetails = () => {
 
   return (
     <div>
-      <button>Get Back</button>
+      <Link to={backLinkLocationRef.current}>Get Back</Link>
       <h2>MovieDetails</h2>
       <h3>
-        {title}{' '}
-        ({releaseDate
+        {title} (
+        {releaseDate
           ? (releaseDate = new Date(releaseDate).getFullYear())
-          : (releaseDate = '')})
+          : (releaseDate = '')}
+        )
       </h3>
       <img src={`https://image.tmdb.org/t/p/w500${poster}`} alt="movie" />
       <p>User Score: {Math.ceil(score)}</p>
@@ -60,10 +71,14 @@ const MovieDetails = () => {
       {genres.length ? <p>{genresJoin}</p> : null}
 
       <nav>
-        <StyledLink to="cast"><div>Cast</div></StyledLink>
+        <StyledLink to="cast">
+          <div>Cast</div>
+        </StyledLink>
         <StyledLink to="reviews">Reviews</StyledLink>
       </nav>
-      <Outlet/>
+      <Suspense fallback={<div>...Loading</div>}>
+        <Outlet />
+      </Suspense>
     </div>
   );
 };
