@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+
 axios.defaults.baseURL = `https://api.themoviedb.org/`;
 export const FetchPopularMovies = async () => {
   const response = await axios.get('3/movie/popular', {
